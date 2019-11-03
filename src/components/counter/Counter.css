@@ -4,9 +4,32 @@ button {
     padding: 10px 30px;
     color: white;
     width: 100px;
+    margin: 5px;
 }
 
-.count{
-    font-size: 40px;
+button.ResetButton {
+    background-color: red;
+    font-size: 15px;
+    padding: 10px 30px;
+    color: white;
+    width: 200px;
+    margin: 5px;
+}
+
+.count {
+    font-size: 50px;
     padding: 15px 30px;
+    margin: 5px;
+}
+
+.Reset {
+    color: white;
+    background-color: red;
+    font-size: 50px;
+    padding: 15px 30px;
+    margin: 5px;
+}
+
+body {
+    padding: 20px 30px;
 }
