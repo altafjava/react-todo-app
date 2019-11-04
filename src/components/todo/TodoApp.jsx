@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 class TodoApp extends Component {
     render() {
@@ -7,13 +7,16 @@ class TodoApp extends Component {
             <div className="TodoApp">
                 <Router>
                     <>
-                        <Route path="/" Component={LoginComponent} />
-                        {/* <Route path="/login" Component={LoginComponent} /> */}
-                        {/* <Route path="/welcome" Component={WelcomeComponent} /> */}
+                        <Switch>
+                            <Route path="/" exact component={LoginComponent} />
+                            <Route path="/login" component={LoginComponent} />
+                            <Route path="/welcome/:name" component={WelcomeComponent} />
+                            <Route component={ErrorComponent} />
+                        </Switch>
                     </>
                 </Router>
-                <LoginComponent />
-                {/* <WelcomeComponent /> */}
+                {/* <LoginComponent />
+                <WelcomeComponent /> */}
             </div>
         )
     }
@@ -37,6 +40,7 @@ class LoginComponent extends Component {
             <div>
                 {this.state.isLoginFailed && <div>Invalid Credential</div>}
                 {this.state.showSuccessMessage && <div>Login Successful</div>}
+                Username <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
                 Password <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                 <button onClick={this.loginClicked}>Login</button>
             </div>
@@ -48,9 +52,9 @@ class LoginComponent extends Component {
     }
 
     loginClicked() {
-        console.log(this.state)
         if (this.state.username === 'altaf' && this.state.password === 'java') {
-            this.setState({ isLoginFailed: false, showSuccessMessage: true })
+            this.props.history.push(`/welcome/${this.state.username}`)
+            // this.setState({ isLoginFailed: false, showSuccessMessage: true })
         } else {
             this.setState({ isLoginFailed: true, showSuccessMessage: false })
         }
@@ -59,8 +63,15 @@ class LoginComponent extends Component {
 
 class WelcomeComponent extends Component {
     render() {
-        return <div>Welcome to AltafJava</div>
+        return <div>Welcome {this.props.match.params.name}</div>
     }
+}
+
+function ErrorComponent() {
+    return (
+        <div>Something went wrong</div>
+    );
+
 }
 
 export default TodoApp
