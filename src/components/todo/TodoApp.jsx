@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class TodoApp extends Component {
     render() {
         return (
             <div className="TodoApp">
+                <Router>
+                    <>
+                        <Route path="/" Component={LoginComponent} />
+                        {/* <Route path="/login" Component={LoginComponent} /> */}
+                        {/* <Route path="/welcome" Component={WelcomeComponent} /> */}
+                    </>
+                </Router>
                 <LoginComponent />
+                {/* <WelcomeComponent /> */}
             </div>
         )
     }
@@ -20,20 +29,14 @@ class LoginComponent extends Component {
             showSuccessMessage: false
         }
         this.handleChange = this.handleChange.bind(this);
-        // this.handleUsernameChange = this.handleUsernameChange.bind(this)
-        // this.handlePasswordChange = this.handlePasswordChange.bind(this)
         this.loginClicked = this.loginClicked.bind(this)
     }
 
     render() {
         return (
             <div>
-                {/* <ShowSuccessOrErrorMessageComponent isLoginSuccess={this.state.isLoginSuccess} /> */}
                 {this.state.isLoginFailed && <div>Invalid Credential</div>}
                 {this.state.showSuccessMessage && <div>Login Successful</div>}
-                {/* Username <input type="text" name="username" value={this.state.username} onChange={this.handleUsernameChange} />
-                Password <input type="password" name="password" value={this.state.password} onChange={this.handlePasswordChange} /> */}
-                Username <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
                 Password <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                 <button onClick={this.loginClicked}>Login</button>
             </div>
@@ -43,14 +46,6 @@ class LoginComponent extends Component {
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value })
     }
-    // handleUsernameChange(event) {
-    //     console.log(event.target.value)
-    //     this.setState({ username: event.target.value })
-    // }
-    // handlePasswordChange(event) {
-    //     console.log(event.target.value)
-    //     this.setState({ password: event.target.value })
-    // }
 
     loginClicked() {
         console.log(this.state)
@@ -61,15 +56,11 @@ class LoginComponent extends Component {
         }
     }
 }
-// function ShowSuccessOrErrorMessageComponent(props) {
-//     if (props.isLoginSuccess != undefined) {
-//         if (props.isLoginSuccess) {
-//             return <div>Login Successful</div>
-//         } else {
-//             return <div>Invalid Credential</div>
-//         }
-//     }
-//     return null
-// }
+
+class WelcomeComponent extends Component {
+    render() {
+        return <div>Welcome to AltafJava</div>
+    }
+}
 
 export default TodoApp
