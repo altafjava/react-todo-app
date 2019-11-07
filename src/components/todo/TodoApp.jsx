@@ -11,6 +11,7 @@ class TodoApp extends Component {
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
                             <Route path="/welcome/:name" component={WelcomeComponent} />
+                            <Route path="/todo" component={TodoComponent} />
                             <Route component={ErrorComponent} />
                         </Switch>
                     </>
@@ -67,6 +68,35 @@ class WelcomeComponent extends Component {
     }
 }
 
+class TodoComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            todo: { id: 1, description: "My Desc" }
+        }
+    }
+    render() {
+        return (
+            <div>
+                <h1>List of Todos</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{this.state.todo.id}</td>
+                            <td>{this.state.todo.description}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+}
 function ErrorComponent() {
     return (
         <div>Something went wrong</div>
