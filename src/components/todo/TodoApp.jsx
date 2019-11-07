@@ -12,7 +12,7 @@ class TodoApp extends Component {
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
                             <Route path="/welcome/:name" component={WelcomeComponent} />
-                            <Route path="/todo" component={TodoComponent} />
+                            <Route path="/todos" component={TodoComponent} />
                             <Route component={ErrorComponent} />
                         </Switch>
                         <FooterComponent />
@@ -66,7 +66,7 @@ class LoginComponent extends Component {
 
 class WelcomeComponent extends Component {
     render() {
-        return <div>Welcome {this.props.match.params.name}. You can manage your todos <Link to="/todo">here</Link></div>
+        return <div>Welcome {this.props.match.params.name}. You can manage your todos <Link to="/todos">here</Link></div>
     }
 }
 
@@ -111,7 +111,21 @@ class TodoComponent extends Component {
 }
 class HeaderComponent extends Component {
     render() {
-        return <div>Header<hr /></div>
+        return (
+            <header>
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+                    <div><a href="https://altafjava.blogspot.com" className="navbar-brand">AltafJava</a></div>
+                    <ul className="navbar-nav">
+                        <li><Link className="nav-link" to="/welcome/altafjava">Home</Link></li>
+                        <li><Link className="nav-link" to="/todos">Todos</Link></li>
+                    </ul>
+                    <ul className="navbar-nav navbar-collapse justify-content-end">
+                        <li><Link className="nav-link" to="/login">Login</Link></li>
+                        <li><Link className="nav-link" to="/logout">Logout</Link></li>
+                    </ul>
+                </nav>
+            </header>
+        )
     }
 }
 class FooterComponent extends Component {
