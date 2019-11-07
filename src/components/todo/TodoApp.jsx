@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 class TodoApp extends Component {
     render() {
@@ -64,7 +64,7 @@ class LoginComponent extends Component {
 
 class WelcomeComponent extends Component {
     render() {
-        return <div>Welcome {this.props.match.params.name}</div>
+        return <div>Welcome {this.props.match.params.name}. You can manage your todos <Link to="/todo">here</Link></div>
     }
 }
 
