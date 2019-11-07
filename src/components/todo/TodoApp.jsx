@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import AuthenticationService from './AuthenticationService.js'
+import AuthenticatedRoute from './AuthenticatedRoute'
 
 class TodoApp extends Component {
     render() {
+        console.log("todoApp render=");
         return (
             <div className="TodoApp">
                 <Router>
@@ -12,21 +14,39 @@ class TodoApp extends Component {
                         <Switch>
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
-                            <Route path="/welcome/:name" component={WelcomeComponent} />
-                            <Route path="/todos" component={TodoComponent} />
-                            <Route path="/logout" component={LogoutComponent} />
+                            <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
+                            <AuthenticatedRoute path="/todos" component={TodoComponent} />
+                            <AuthenticatedRoute path="/logout" component={LogoutComponent} />
                             <Route component={ErrorComponent} />
                         </Switch>
                         <FooterComponent />
                     </>
                 </Router>
-                {/* <LoginComponent />
-                <WelcomeComponent /> */}
             </div>
         )
     }
 }
-
+class HeaderComponent extends Component {
+    render() {
+        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+        console.log("isUserLoggedIn=" + isUserLoggedIn)
+        return (
+            <header>
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+                    <div><a href="https://altafjava.blogspot.com" className="navbar-brand">AltafJava</a></div>
+                    <ul className="navbar-nav">
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/welcome/altafjava">Home</Link></li>}
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/todos">Todos</Link></li>}
+                    </ul>
+                    <ul className="navbar-nav navbar-collapse justify-content-end">
+                        {!isUserLoggedIn && <li><Link className="nav-link" to="/login">Login</Link></li>}
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Logout</Link></li>}
+                    </ul>
+                </nav>
+            </header>
+        )
+    }
+}
 class LoginComponent extends Component {
     constructor(props) {
         super(props)
@@ -39,7 +59,6 @@ class LoginComponent extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.loginClicked = this.loginClicked.bind(this)
     }
-
     render() {
         return (
             <div>
@@ -54,11 +73,9 @@ class LoginComponent extends Component {
             </div>
         )
     }
-
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value })
     }
-
     loginClicked() {
         if (this.state.username === 'altaf' && this.state.password === 'java') {
             AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
@@ -69,7 +86,6 @@ class LoginComponent extends Component {
         }
     }
 }
-
 class WelcomeComponent extends Component {
     render() {
         return (
@@ -80,7 +96,6 @@ class WelcomeComponent extends Component {
         )
     }
 }
-
 class TodoComponent extends Component {
     constructor(props) {
         super(props)
@@ -107,7 +122,7 @@ class TodoComponent extends Component {
                         </thead>
                         <tbody>
                             {this.state.todos.map(todo =>
-                                <tr>
+                                <tr key={todo.id}>
                                     <td>{todo.description}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td>{todo.targetDate.toString()}</td>
@@ -117,25 +132,6 @@ class TodoComponent extends Component {
                     </table>
                 </div>
             </div>
-        )
-    }
-}
-class HeaderComponent extends Component {
-    render() {
-        return (
-            <header>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div><a href="https://altafjava.blogspot.com" className="navbar-brand">AltafJava</a></div>
-                    <ul className="navbar-nav">
-                        <li><Link className="nav-link" to="/welcome/altafjava">Home</Link></li>
-                        <li><Link className="nav-link" to="/todos">Todos</Link></li>
-                    </ul>
-                    <ul className="navbar-nav navbar-collapse justify-content-end">
-                        <li><Link className="nav-link" to="/login">Login</Link></li>
-                        <li><Link className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Logout</Link></li>
-                    </ul>
-                </nav>
-            </header>
         )
     }
 }
@@ -164,5 +160,4 @@ function ErrorComponent() {
     );
 
 }
-
 export default TodoApp
