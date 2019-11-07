@@ -131,7 +131,11 @@ class HeaderComponent extends Component {
 }
 class FooterComponent extends Component {
     render() {
-        return <div><hr />Footer</div>
+        return (
+            <div className="footer">
+                <span className="text-muted">All rights reserved 2019 @AltafJava</span>
+            </div>
+        )
     }
 }
 class LogoutComponent extends Component {
