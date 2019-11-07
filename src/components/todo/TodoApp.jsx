@@ -13,6 +13,7 @@ class TodoApp extends Component {
                             <Route path="/login" component={LoginComponent} />
                             <Route path="/welcome/:name" component={WelcomeComponent} />
                             <Route path="/todos" component={TodoComponent} />
+                            <Route path="/logout" component={LogoutComponent} />
                             <Route component={ErrorComponent} />
                         </Switch>
                         <FooterComponent />
@@ -131,6 +132,16 @@ class HeaderComponent extends Component {
 class FooterComponent extends Component {
     render() {
         return <div><hr />Footer</div>
+    }
+}
+class LogoutComponent extends Component {
+    render() {
+        return (
+            <>
+                <h1>You are logged out now</h1>
+                <div className="container">Thanks for using our application</div>
+            </>
+        )
     }
 }
 function ErrorComponent() {
