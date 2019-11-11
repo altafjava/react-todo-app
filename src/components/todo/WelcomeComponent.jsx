@@ -21,7 +21,8 @@ class WelcomeComponent extends Component {
                 <div className="container">
                     Click here to get customized message.<br /><br />
                     <button className="btn btn-success" onClick={this.retrieveWelcomeMessage}>Get Welcome Message</button><br /><br />
-                    <button className="btn btn-info" onClick={this.retrieveHelloWorldBean}>Get Hello World Bean</button>
+                    <button className="btn btn-info" onClick={this.retrieveHelloWorldBean}>Get Hello World Bean</button><br /><br />
+                    <button className="btn btn-success" onClick={this.retrievePathVariableService}>Get Path Variable Message</button><br /><br />
                 </div>
                 <div className="container">
                     {this.state.welcomeMessage}
@@ -41,10 +42,18 @@ class WelcomeComponent extends Component {
         HelloWorldService.executeRetrieveHelloWorldBean()
             .then(response => {
                 this.setState(
-                    { welcomeMessage: response.data.mesage }
+                    { welcomeMessage: response.data.message }
                 )
             })
+    }
 
+    retrievePathVariableService = () => {
+        HelloWorldService.executePathVariableService(this.props.match.params.name)
+            .then(response => {
+                this.setState(
+                    { welcomeMessage: response.data.message }
+                )
+            })
     }
 }
 export default WelcomeComponent
