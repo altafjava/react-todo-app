@@ -6,7 +6,6 @@ class WelcomeComponent extends Component {
     constructor(props) {
         super(props)
         this.retrieveWelcomeMessage = this.retrieveWelcomeMessage.bind(this)
-        this.handleSuccessfulResponse = this.handleSuccessfulResponse.bind(this)
         this.state = {
             welcomeMessage: ''
         }
@@ -33,7 +32,6 @@ class WelcomeComponent extends Component {
     retrieveWelcomeMessage() {
         HelloWorldService.executeHelloWorldService()
             .then(response => {
-                // this.handleSuccessfulResponse(response)
                 this.setState(
                     { welcomeMessage: response.data }
                 )
@@ -42,9 +40,8 @@ class WelcomeComponent extends Component {
     retrieveHelloWorldBean = () => {
         HelloWorldService.executeRetrieveHelloWorldBean()
             .then(response => {
-                // this.handleSuccessfulResponse(response)
                 this.setState(
-                    { welcomeMessage: response.data.message }
+                    { welcomeMessage: response.data.mesage }
                 )
             })
 
