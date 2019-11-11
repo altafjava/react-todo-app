@@ -20,8 +20,9 @@ class WelcomeComponent extends Component {
                     You can manage your todos <Link to="/todos">here</Link>
                 </div>
                 <div className="container">
-                    Click here to get customized message.
-                    <button className="btn btn-success" onClick={this.retrieveWelcomeMessage}>Get Welcome Message</button>
+                    Click here to get customized message.<br /><br />
+                    <button className="btn btn-success" onClick={this.retrieveWelcomeMessage}>Get Welcome Message</button><br /><br />
+                    <button className="btn btn-info" onClick={this.retrieveHelloWorldBean}>Get Hello World Bean</button>
                 </div>
                 <div className="container">
                     {this.state.welcomeMessage}
@@ -31,12 +32,22 @@ class WelcomeComponent extends Component {
     }
     retrieveWelcomeMessage() {
         HelloWorldService.executeHelloWorldService()
-            .then(response => this.handleSuccessfulResponse(response))
+            .then(response => {
+                // this.handleSuccessfulResponse(response)
+                this.setState(
+                    { welcomeMessage: response.data }
+                )
+            })
     }
-    handleSuccessfulResponse(response) {
-        this.setState(
-            { welcomeMessage: response.data }
-        )
+    retrieveHelloWorldBean = () => {
+        HelloWorldService.executeRetrieveHelloWorldBean()
+            .then(response => {
+                // this.handleSuccessfulResponse(response)
+                this.setState(
+                    { welcomeMessage: response.data.message }
+                )
+            })
+
     }
 }
 export default WelcomeComponent
