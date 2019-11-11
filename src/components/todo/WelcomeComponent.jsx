@@ -7,7 +7,8 @@ class WelcomeComponent extends Component {
         super(props)
         this.retrieveWelcomeMessage = this.retrieveWelcomeMessage.bind(this)
         this.state = {
-            welcomeMessage: ''
+            welcomeMessage: '',
+            errorMessage: ''
         }
     }
     render() {
@@ -23,9 +24,13 @@ class WelcomeComponent extends Component {
                     <button className="btn btn-success" onClick={this.retrieveWelcomeMessage}>Get Welcome Message</button><br /><br />
                     <button className="btn btn-info" onClick={this.retrieveHelloWorldBean}>Get Hello World Bean</button><br /><br />
                     <button className="btn btn-success" onClick={this.retrievePathVariableService}>Get Path Variable Message</button><br /><br />
+                    <button className="btn btn-danger" onClick={this.retrieveErrorService}>Get Error Message</button><br /><br />
                 </div>
                 <div className="container">
                     {this.state.welcomeMessage}
+                </div>
+                <div className="container">
+                    {this.state.errorMessage}
                 </div>
             </>
         )
@@ -54,6 +59,12 @@ class WelcomeComponent extends Component {
                     { welcomeMessage: response.data.message }
                 )
             })
+    }
+
+    retrieveErrorService = () => {
+        HelloWorldService.executeErrorService()
+            .then(response => console.log("response=" + response.data))
+            .catch(error => console.log("error=" + error.response.data.message))
     }
 }
 export default WelcomeComponent
