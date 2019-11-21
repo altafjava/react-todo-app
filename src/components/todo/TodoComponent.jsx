@@ -31,7 +31,8 @@ class TodoComponent extends Component {
                                     <td>{todo.description}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td>{todo.targetDate.toString()}</td>
-                                    <td><button className="btn btn-warning" onClick={() => this.deleteTodoComponent(todo.id)}>Delete</button></td>
+                                    <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(todo.id)}>Update</button></td>
+                                    <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td>
                                 </tr>
                             )}
                         </tbody>
@@ -49,17 +50,17 @@ class TodoComponent extends Component {
     componentWillUnmount() {
         console.log('componentWillUnmount')
     }
-
-    deleteTodoComponent = (id) => {
+    updateTodoClicked = (id) => {
+        this.props.history.push(`/todos/${id}`)
+    }
+    deleteTodoClicked = (id) => {
         let username = AuthenticationService.getLoggedInUserName();
-        console.log(id, "   ", username)
         TodoDataService.executeDeleteTodo(username, id)
             .then(response => {
                 this.setState({ message: `Delete of todo ${id} successful` })
                 this.refreshTodos()
             })
     }
-
     refreshTodos() {
         let username = AuthenticationService.getLoggedInUserName();
         TodoDataService.executeGetAllTodos(username)
