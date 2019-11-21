@@ -11,7 +11,6 @@ import TodoComponent from './TodoComponent'
 
 class TodoApp extends Component {
     render() {
-        console.log("todoApp render=");
         return (
             <div className="TodoApp">
                 <Router>

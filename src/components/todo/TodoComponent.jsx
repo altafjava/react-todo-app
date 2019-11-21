@@ -4,25 +4,14 @@ import AuthenticationService from './AuthenticationService.js'
 
 class TodoComponent extends Component {
     constructor(props) {
+        console.log('constructor')
         super(props)
         this.state = {
-            todos: [
-                // { id: 1, description: "My Desc", done: false, targetDate: new Date() },
-                // { id: 2, description: "Playing with Java", done: false, targetDate: new Date() },
-                // { id: 3, description: "Entertaining with React", done: false, targetDate: new Date() }
-            ]
+            todos: []
         }
     }
-    componentDidMount() {
-        let username = AuthenticationService.getLoggedInUserName();
-        TodoDataService.executeGetAllTodos(username)
-            .then(response => {
-                this.setState({
-                    todos: response.data
-                })
-            })
-    }
     render() {
+        console.log('render')
         return (
             <div>
                 <h1>List of Todos</h1>
@@ -48,6 +37,26 @@ class TodoComponent extends Component {
                 </div>
             </div>
         )
+    }
+    componentDidMount() {
+        console.log('componentDidMount')
+        let username = AuthenticationService.getLoggedInUserName();
+        TodoDataService.executeGetAllTodos(username)
+            .then(response => {
+                this.setState({
+                    todos: response.data
+                })
+            })
+    }
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log('shouldComponentUpdate')
+        console.log('nextProps=', nextProps)
+        console.log('nextState=', nextState)
+        console.log('nextContext=', nextContext)
+        return true
+    }
+    componentWillUnmount() {
+        console.log('componentWillUnmount')
     }
 }
 export default TodoComponent
